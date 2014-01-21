@@ -50,6 +50,7 @@ module Kurchatov
             @all_names << child.name
             next
           end
+          @all_plugins.each { |p| p.plugin.merge!(val) if name == p.name }
         end
         @all_plugins.each do |p|
           unless p.always_start || @all_names.include?(p.name)

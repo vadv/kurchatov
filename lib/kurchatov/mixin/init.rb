@@ -1,4 +1,3 @@
-require "ohai"
 require_relative "command"
 require_relative "http"
 require_relative "ohai"

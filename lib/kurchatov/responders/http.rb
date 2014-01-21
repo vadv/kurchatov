@@ -13,13 +13,14 @@ module Kurchatov
         loop do
           client = @server.accept
           response = info
+          client.gets
           headers = "HTTP/1.1 200 OK\r\n" +
             "Server: Kurchatov Ruby\r\n" +
             "Content-Length: #{response.bytesize}\r\n" +
             "Content-Type: application/json\r\n\r\n"
-            client.print headers
-            client.print response
-            client.close
+          client.print headers
+          client.print response
+          client.close
         end
       end
 
