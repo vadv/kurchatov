@@ -1,3 +1,3 @@
 module Kurchatov
-  VERSION = "0.0.2b"
+  VERSION = "0.0.2"
 end
