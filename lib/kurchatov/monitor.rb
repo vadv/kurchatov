@@ -1,5 +1,3 @@
-require "kurchatov/mixin/queue"
-
 module Kurchatov
   class Monitor
 

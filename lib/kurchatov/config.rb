@@ -1,5 +1,3 @@
-require "mixlib/config"
-
 module Kurchatov
   class Config
     extend Mixlib::Config

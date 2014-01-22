@@ -1,16 +1,18 @@
 #!/bin/sh -e
 
 
-nc -l 5555 &
+bundle exec ruby ./tests/server.rb &
 
 rm -rf ./tmp
 mkdir -p ./tmp
 cat > tmp/config.yml <<EOF
+not_exists:
+  - not error please
 test2:
   url: './tests/run.sh'
   cmd: 'ls'
   parent: 'test'
-  counter: 5
+  counter: 2
 test:
   - url: 'http://google.com'
     cmd: 'test -f ./tests/run.sh'
@@ -22,8 +24,8 @@ cat > tmp/test1.rb <<EOF
 interval 10
 name "test"
 
-default[:host] = 'http://notexists'
-default[:cmd] = 'ls -1 && ls /notexists'
+default[:url] = 'http://notexists'
+default[:cmd] = 'ls /notexists'
 
 collect do
   @counter ||= 0
@@ -31,6 +33,10 @@ collect do
   Log.info "get size from #{plugin.url}: #{rest_get(plugin.url).size}"
   @counter += 1
   exit 0 if plugin.counter && @counter > plugin.counter.to_i
+  event(:metric => 3, :critical => 2, :warning => 1)
+  event(:metric => 2, :critical => 2, :warning => 1)
+  event(:metric => 1, :critical => 2, :warning => 1)
+  event(:metric => 0, :critical => 2, :warning => 1)
 end
 EOF
 
@@ -51,5 +57,3 @@ grep 'file command ls return: Gemfile' ./tmp/loadplugins.log
 grep 'get size from http://google.com:' ./tmp/loadplugins.log
 grep 'get size from https://www.kernel.org' ./tmp/loadplugins.log
 grep 'get size from ./tests/run.sh' ./tmp/loadplugins.log
-
-pkill -9 nc || exit 0

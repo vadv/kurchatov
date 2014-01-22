@@ -1,3 +1,6 @@
+require "beefcake"
+require "kurchatov/riemann/event"
+
 module Kurchatov
   module Riemann
     class Message

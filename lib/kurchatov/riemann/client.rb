@@ -1,7 +1,5 @@
 require "timeout"
 require "socket"
-require "beefcake"
-require "kurchatov/riemann/event"
 require "kurchatov/riemann/message"
 
 module Kurchatov

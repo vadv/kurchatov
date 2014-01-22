@@ -1,5 +1,3 @@
-require "mixlib/shellout"
-
 module Kurchatov
   module Mixin
     module Command

@@ -1,5 +1,3 @@
-require "mixlib/log"
-
 module Kurchatov
   class Log
     extend Mixlib::Log

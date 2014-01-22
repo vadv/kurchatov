@@ -1,5 +1,3 @@
-require "ohai"
-
 module Kurchatov
 
   module Ohai

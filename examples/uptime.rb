@@ -9,6 +9,6 @@ end
 
 collect :os => "darwin" do
   event(
-    :metric => shell('uptime | cut -d":" -f4- | sed s/,//g').to_f
+    :metric => shell("sysctl -n kern.boottime | awk '{print $4}'").to_f
   )
 end
