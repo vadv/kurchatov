@@ -1,4 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/kurchatov.png)](http://badge.fury.io/rb/kurchatov)
 [![Build Status](https://travis-ci.org/vadv/kurchatov.png)](https://travis-ci.org/vadv/kurchatov)
+[![Code Climate](https://codeclimate.com/github/vadv/kurchatov.png)](https://codeclimate.com/github/vadv/kurchatov)
 
 # Kurchatov
 
@@ -64,7 +66,7 @@ end
 
 Больше примеров вы найдете [тут](https://github.com/vadv/kurchatov/tree/master/examples).
 
-## OHAI
+## Ohai
 
 И в африке ohai. Минимальный пример:
 ```ruby
@@ -80,7 +82,7 @@ postgres[:version] = stdout.strip
 Это обычный yml-файл с настройками плагинов, eго удобно генерить chef'ом :)
 ```yaml
 plugin name:
-  settins name: 
+  settings name:
   - 'bla-bla'
 ```
 
@@ -103,9 +105,6 @@ robots txt watcher: # новый плагин name == 'robots txt watcher'
 
 Удобно писать плагины, использовать 1 процесс, 1 коннект, и проч.
 
-Мне не нравиться официальная реализация [riemann-client](https://github.com/aphyr/riemann-ruby-client),
-она течет и создает много ненужных *конкретно* для меня полей для протобуфа (но все равно спасибо [aphyr](http://aphyr.com) за
-прекрасный сервер :) ), так что вы тут не найдете search и udp.
-
-Упор сделан на потребление памяти (эх, ruby), поэтому все на тредах и на данный момент на 1.9.3 вы можете получить 8Mb RES.
+Посмотрите официальную реализацию [riemann-client](https://github.com/aphyr/riemann-ruby-client),
+По сравнению с ней вы тут не найдете search и udp.
 
