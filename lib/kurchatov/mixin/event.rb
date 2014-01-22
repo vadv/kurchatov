@@ -2,20 +2,22 @@ module Kurchatov
   module Mixin
     module Event
 
+      include Kurchatov::Mixin::Queue
+
       EVENT_FIELDS = [
-        :time, :state, :service, :host,
-        :description, :tags, :ttl, :metric
+          :time, :state, :service, :host,
+          :description, :tags, :ttl, :metric
       ]
 
       def event(hash = {})
         Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
-        return unless normilize_event(hash)
+        return unless normalize_event(hash)
         events << hash
       end
 
       protected
 
-      def normilize_event(hash = {})
+      def normalize_event(hash = {})
         hash[:description] = hash[:desc] if hash[:description].nil? && hash[:desc]
         if hash[:metric].kind_of?(Float)
           hash[:metric] = 0.0 if hash[:metric].nan?
@@ -24,7 +26,7 @@ module Kurchatov
         set_diff_metric(hash)
         set_event_state(hash)
         return false if hash[:miss]
-        hash.each {|k,_| hash.delete(k) unless EVENT_FIELDS.include?(k)}
+        hash.each { |k, _| hash.delete(k) unless EVENT_FIELDS.include?(k) }
         hash[:service] ||= name
         hash[:tags] ||= Kurchatov::Config[:tags]
         hash[:host] ||= Kurchatov::Config[:host]

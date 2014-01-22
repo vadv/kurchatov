@@ -13,12 +13,12 @@ collect do
   end
 
   event(
-    :diff => true,
-    :description => "RSS usage delta #{plugin.pidfile}",
-    :metric => mem_total,
-    :service => "procmem #{plugin.pidfile}",
-    :warning => 30*1024, #kibibytes
-    :critical => 90*1024
+      :diff => true,
+      :description => "RSS usage delta #{plugin.pidfile}",
+      :metric => mem_total,
+      :service => "procmem #{plugin.pidfile}",
+      :warning => 30*1024, #kibibytes
+      :critical => 90*1024
   ) if File.stat(plugin.pidfile).mtime > interval
 
 end

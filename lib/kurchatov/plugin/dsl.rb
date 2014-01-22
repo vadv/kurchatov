@@ -49,6 +49,7 @@ module Kurchatov
       def last_plugin
         last.plugin
       end
+
       alias :default :last_plugin
 
 
@@ -57,7 +58,8 @@ module Kurchatov
       def self.load_riemann_plugins(paths)
         dsl = Kurchatov::Plugins::DSL.new
         paths.map do |path|
-          Log.error("Directory #{path} not exists") and exit Kurchatov::Config[:ERROR_CONFIG] unless File.directory? path 
+          Log.error("Directory #{path} not found") and
+              exit(Kurchatov::Config[:ERROR_CONFIG]) unless File.directory?(path)
           Dir["#{path}/*#{PLUGIN_EXT}"].sort
         end.flatten.each do |path|
           begin

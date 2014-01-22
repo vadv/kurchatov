@@ -6,9 +6,9 @@ default[:service] = 'check state file'
 collect do
   content = File.read(plugin.file).split("\n").delete_if { |x| x.strip.empty? }
   event(
-    :service     => "#{plugin.service} #{plugin.file}",
-    :description => content.last(plugin.report_lines).join("\n"),
-    :metric      => content.count,
-    :critical    => 1
+      :service => "#{plugin.service} #{plugin.file}",
+      :description => content.last(plugin.report_lines).join("\n"),
+      :metric => content.count,
+      :critical => 1
   )
 end

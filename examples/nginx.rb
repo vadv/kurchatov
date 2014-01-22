@@ -10,7 +10,7 @@ run_if do
   File.exists? plugin.file
 end
 
-collect :os => "linux" do
+collect :os => 'linux' do
   lines = http_get(plugin.url).split("\n")
   lines[2].scan(/\d+/).each_with_index do |value, index|
     event(:service => "nginx #{plugin.nginx_status_1[index]}", :metric => value.to_f/interval, :diff => true)

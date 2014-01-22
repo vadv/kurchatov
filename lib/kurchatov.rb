@@ -1,3 +1,5 @@
-require "kurchatov/version"
+require 'kurchatov/version'
 
-module Kurchatov; end
+module Kurchatov
+  ;
+end

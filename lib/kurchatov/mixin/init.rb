@@ -1,5 +1,5 @@
-require_relative "command"
-require_relative "http"
-require_relative "ohai"
-require_relative "queue"
-require_relative "event"
+require_relative 'command'
+require_relative 'http'
+require_relative 'ohai'
+require_relative 'queue'
+require_relative 'event'

@@ -16,12 +16,12 @@
 # limitations under the License.
 #
 
-provides "fqdn", "domain"
+provides 'fqdn', 'domain'
 
 require_plugin "#{os}::hostname"
 
 # Domain is everything after the first dot
 if fqdn
   fqdn =~ /.+?\.(.*)/
-  domain $1 
+  domain $1
 end

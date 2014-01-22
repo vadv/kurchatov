@@ -12,14 +12,14 @@ collect do
     end
   end
   filter += " \\) and not dst 127.0.0.1:*"
-  cmd    = 'ss -t -4 -n state established ' + filter + ' | wc -l'
+  cmd = 'ss -t -4 -n state established ' + filter + ' | wc -l'
 
   count = shell!(cmd).to_i - 1
 
   event(
-    :service     => "netstat tcp #{plugin.ports.join(', ')}",
-    :metric      => count,
-    :description => "count established connects: #{count} to ports #{plugin.ports.join(', ')}"
+      :service => "netstat tcp #{plugin.ports.join(', ')}",
+      :metric => count,
+      :description => "count established connects: #{count} to ports #{plugin.ports.join(', ')}"
   )
 
 end

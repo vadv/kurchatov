@@ -1,17 +1,18 @@
-require "kurchatov/plugin/riemann"
-require "kurchatov/plugin/dsl"
-require "yaml"
+require 'kurchatov/plugin/riemann'
+require 'kurchatov/plugin/dsl'
+require 'yaml'
 
 module Kurchatov
   module Plugins
     module Config
 
       def self.find_plugin(name, array)
-        array.find {|p| p.name == name }
+        array.find { |p| p.name == name }
       end
 
       def self.load_plugins(plugins_path, config_file)
-        Log.error("Config file #{config_file} not found") and exit Kurchatov::Config[:ERROR_CONFIG] unless File.exists?(config_file)
+        Log.error("Config file #{config_file} not found") and
+            exit(Kurchatov::Config[:ERROR_CONFIG]) unless File.exists?(config_file)
         @all_plugins = Kurchatov::Plugins::DSL.load_riemann_plugins(plugins_path)
         @all_names = Array.new
         @plugins_to_run = Array.new
@@ -55,12 +56,12 @@ module Kurchatov
         @all_plugins.each do |p|
           unless p.always_start || @all_names.include?(p.name)
             Log.info("Plugin '#{p.name}' not started, because it " +
-                                "not 'always_start' and not in config file")
+                         "not 'always_start' and not in config file")
             next
           end
           @plugins_to_run << p if p.runnable_by_config?
         end
-        Log.debug("Plugins to start: #{@plugins_to_run.inspect}")
+        Log.info("Start plugins: #{@plugins_to_run.inspect}")
         @plugins_to_run
       end
 

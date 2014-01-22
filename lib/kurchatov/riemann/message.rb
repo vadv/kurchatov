@@ -1,5 +1,5 @@
-require "beefcake"
-require "kurchatov/riemann/event"
+require 'beefcake'
+require 'kurchatov/riemann/event'
 
 module Kurchatov
   module Riemann

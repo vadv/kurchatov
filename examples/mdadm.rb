@@ -33,7 +33,7 @@ collect do
   mdstat = File.read('/proc/mdstat').split("\n")
   mdstat.each_with_index do |line, index|
     next unless line.include?('blocks')
-    device   = file[index-1].split(':')[0].strip
+    device = file[index-1].split(':')[0].strip
     mdstatus = rm_bracket(line.split(' ').last) # UUU
     next if status_well?(mdstatus) # пропускаем все збс
     next if mdstatus == plugin[states][device].to_s # disabled in config

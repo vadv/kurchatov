@@ -50,9 +50,9 @@ grep -q 'STDERR: ls: cannot access /notexists' ./tmp/testplugin.log
 bundle exec ./bin/kurchatov -d ./tmp/ -c ./tmp/config.yml --hosts 127.0.0.1 -l debug --stop-on-error --logfile ./tmp/loadplugins.log
 echo "Stdout loader"
 cat ./tmp/loadplugins.log
-grep  'Plugins to start' ./tmp/loadplugins.log | grep -q '@name="test_0"'
-grep  'Plugins to start' ./tmp/loadplugins.log | grep -q '@name="test_1"'
-grep  'Plugins to start' ./tmp/loadplugins.log | grep -q '@name="test2"'
+grep  'Start plugins' ./tmp/loadplugins.log | grep -q '@name="test_0"'
+grep  'Start plugins:' ./tmp/loadplugins.log | grep -q '@name="test_1"'
+grep  'Start plugins:' ./tmp/loadplugins.log | grep -q '@name="test2"'
 grep 'file command ls return: Gemfile' ./tmp/loadplugins.log
 grep 'get size from http://google.com:' ./tmp/loadplugins.log
 grep 'get size from https://www.kernel.org' ./tmp/loadplugins.log

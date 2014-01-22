@@ -1,6 +1,4 @@
-# encoding: utf-8
-
-require "kurchatov/riemann/client"
+require 'kurchatov/riemann/client'
 
 module Kurchatov
   module Responders
@@ -34,7 +32,7 @@ module Kurchatov
       def flush
         @events_to_send ||= events.all
         unless @events_to_send.empty?
-          @riemanns.each {|riemann| riemann << @events_to_send }
+          @riemanns.each { |riemann| riemann << @events_to_send }
           Log.debug("Sended events via #{@name.inspect}: #{@events_to_send}")
         end
         @events_to_send = nil
