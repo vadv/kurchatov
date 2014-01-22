@@ -21,7 +21,7 @@ test:
 EOF
 
 cat > tmp/test1.rb <<EOF
-interval 3
+interval 10
 name "test"
 
 default[:url] = 'http://notexists'
