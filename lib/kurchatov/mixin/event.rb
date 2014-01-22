@@ -10,7 +10,7 @@ module Kurchatov
       def event(hash = {})
         normilize_event(hash)
         Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
-        events << hash
+        events << hash unless hash[:miss]
       end
 
       protected
@@ -54,7 +54,7 @@ module Kurchatov
           hash[:metric] = hash[:metric] - old_metric
         else
           @history[hash[:service]] = hash[:metric]
-          hash[:metric] = nil
+          hash[:miss] = true
         end
       end
 

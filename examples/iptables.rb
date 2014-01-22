@@ -15,7 +15,7 @@ collect do
   current_rules = shell_out!('iptables-save').stdout.split("\n").map do |x|
     x[0] == '#' ? nil : delete_counters(x)
   end.compact.join("\n")
-  saved_rules = File.read(plugin.rules_file).split("\n").map do |x|
+  saved_rules = File.read(plugin.rule_file).split("\n").map do |x|
     x[0] == '#' ? nil : delete_counters(x) # delete counters and comments
   end.compact.join("\n")
 
