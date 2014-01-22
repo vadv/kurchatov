@@ -2,6 +2,8 @@ module Kurchatov
   module Plugins
     class DSL
 
+      include Kurchatov::Mixin::Ohai
+
       attr_reader :plugins
       PLUGIN_EXT = '.rb'
 
@@ -19,7 +21,7 @@ module Kurchatov
       end
 
       def interval(val)
-        last.interval = val
+        last.interval = val.to_f
       end
 
       def name(val)

@@ -41,7 +41,7 @@ module Kurchatov
           #
           if val.is_a?(Hash) && val.has_key?('parent')
             parent = find_plugin(val['parent'], @all_plugins)
-            Log.error("Unable to find parent '#{parent_name}' for '#{name}'") and next if parent.nil?
+            Log.error("Unable to find parent '#{parent}' for '#{name}'") and next if parent.nil?
             child = parent.dup
             child.name = name
             child.plugin = parent.plugin.dup

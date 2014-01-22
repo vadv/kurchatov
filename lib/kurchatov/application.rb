@@ -1,13 +1,14 @@
 # encoding: utf-8
 
+require "ohai/system"
 require "mixlib/cli"
 require "kurchatov/version"
 require "kurchatov/config"
 require "kurchatov/log"
 require "kurchatov/mixin/init"
 require "kurchatov/plugin/config"
-require "kurchatov/monitor"
 require "kurchatov/responders/init"
+require "kurchatov/monitor"
 
 module Kurchatov
   class Aplication

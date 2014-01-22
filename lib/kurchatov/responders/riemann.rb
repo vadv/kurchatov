@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 require "kurchatov/riemann/client"
-require "kurchatov/mixin/queue"
 
 module Kurchatov
   module Responders

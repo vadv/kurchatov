@@ -2,7 +2,6 @@
 
 require "kurchatov/plugin"
 require "kurchatov/mashie"
-require "kurchatov/mixin/init"
 
 module Kurchatov
   module Plugins
@@ -22,7 +21,7 @@ module Kurchatov
         @plugin = Mashie.new
         @always_start = false
         @collect = nil
-        @interval = 60
+        @interval = 60.0
       end
 
       def run
