@@ -8,9 +8,9 @@ module Kurchatov
       ]
 
       def event(hash = {})
-        normilize_event(hash)
         Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
-        events << hash unless hash[:miss]
+        return unless normilize_event(hash)
+        events << hash
       end
 
       protected
@@ -23,10 +23,12 @@ module Kurchatov
         end
         set_diff_metric(hash)
         set_event_state(hash)
+        return false if hash[:miss]
         hash.each {|k,_| hash.delete(k) unless EVENT_FIELDS.include?(k)}
         hash[:service] ||= name
         hash[:tags] ||= Kurchatov::Config[:tags]
         hash[:host] ||= Kurchatov::Config[:host]
+        true
       end
 
       def set_event_state(hash = {})
