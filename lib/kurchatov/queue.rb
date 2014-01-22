@@ -2,7 +2,7 @@
 
 module Kurchatov
   class Queue
-    QUEUE_MAX_SIZE = 100
+    QUEUE_MAX_SIZE = 300
 
     def initialize
       @events = ::Queue.new
