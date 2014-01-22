@@ -9,7 +9,7 @@ default[:age] = 24 * 60 * 60
 collect do
   if File.directory?(plugin.dir)
     count_files = 0
-    file_mask   = Regexp.new(plugin.file_mask)
+    file_mask = Regexp.new(plugin.file_mask)
     Find.find(plugin.dir).each do |file|
       next unless File.file? file
       next unless file_mask.match file

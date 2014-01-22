@@ -1,5 +1,5 @@
-require "open-uri"
-require "yajl/json_gem"
+require 'open-uri'
+require 'yajl/json_gem'
 
 module Kurchatov
   module Mixin
@@ -16,6 +16,6 @@ module Kurchatov
         end
       end
 
-    end 
-  end 
+    end
+  end
 end

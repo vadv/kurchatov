@@ -16,11 +16,11 @@
 # limitations under the License.
 #
 
-provides "hostname", "fqdn"
+provides 'hostname', 'fqdn'
 
-hostname from("hostname -s")
+hostname from('hostname -s')
 begin
-  fqdn from("hostname --fqdn")
+  fqdn from('hostname --fqdn')
 rescue
-  Ohai::Log.debug("hostname -f returned an error, probably no domain is set")
+  Ohai::Log.debug('hostname -f returned an error, probably no domain is set')
 end

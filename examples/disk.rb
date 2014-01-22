@@ -14,7 +14,7 @@ collect :os => 'linux' do
   def get_monit_points_for_size
     monit_points = []
     File.open('/proc/mounts', 'r') do |file|
-      while line = file.gets
+      while (line = file.gets)
         mtab = line.split(/\s+/)
         monit_points << mtab[1] unless plugin.not_monit_fs_4_size.include? mtab[2]
       end
@@ -25,7 +25,7 @@ collect :os => 'linux' do
   def get_monit_points_for_fstab
     monit_points = []
     File.open('/proc/mounts', 'r') do |file|
-      while line = file.gets
+      while (line = file.gets)
         mtab = line.split(/\s+/)
         if plugin.monit_fs_4_fstab.include?(mtab[2]) &&
             !plugin.not_monit_point_4_fstab.include?(mtab[1]) &&
@@ -38,7 +38,7 @@ collect :os => 'linux' do
   end
 
   get_monit_points_for_size.each do |point|
-    point_stat  = Sys::Filesystem.stat(point)
+    point_stat = Sys::Filesystem.stat(point)
     human_point = point == '/' ? '/root' : point
     human_point = human_point.gsub(/^\//, '').gsub(/\//, '_')
     event(:warning => 70, :critical => 85, :service => "disk #{human_point} % block", :desc => "Disk usage #{point}, %", :metric => (1- point_stat.blocks_available.to_f/point_stat.blocks).round(2) * 100) unless point_stat.blocks == 0

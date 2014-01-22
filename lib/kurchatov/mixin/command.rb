@@ -19,11 +19,6 @@ module Kurchatov
         mix.stdout
       end
 
-      def print_unix_mem_info
-        pid, size = `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.strip.split.map(&:to_i)
-        puts "Pid: #{pid}, memusage: #{size}"
-      end
-
     end
   end
 end

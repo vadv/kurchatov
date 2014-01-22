@@ -3,7 +3,6 @@ module Kurchatov
 
     class Task
       include Kurchatov::Mixin::Event
-      include Kurchatov::Mixin::Queue
       attr_accessor :thread, :instance
 
       def initialize(plugin)
@@ -19,7 +18,7 @@ module Kurchatov
         rescue => e
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n #{e.backtrace.join("\n")}"
           Log.error(desc)
-          event(:service => "riemann client errors", :desc => desc, :state => 'critical')
+          event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
         end
         @thread = Thread.new { @plugin.run }
         true
@@ -45,7 +44,7 @@ module Kurchatov
     end
 
     def run
-      loop do 
+      loop do
         @tasks.each { |t| exit Config[:ERROR_PLUGIN_REQ] if t.died? && @stop_on_error }
         Log.debug("Check alive plugins [#{@tasks.count}]")
         sleep CHECK_ALIVE_TIMEOUT
@@ -53,7 +52,7 @@ module Kurchatov
     end
 
     def tasks_status
-      @tasks.map {|t| t.status }
+      @tasks.map { |t| t.status }
     end
 
   end

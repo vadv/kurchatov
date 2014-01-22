@@ -3,7 +3,6 @@ module Kurchatov
     class Udp < Kurchatov::Plugin
 
       include Kurchatov::Mixin::Event
-      include Kurchatov::Mixin::Queue
 
       def initialize(conn)
         @host, @port = conn.split(':')
@@ -17,9 +16,9 @@ module Kurchatov
         end
       end
 
-      def process(data,src)
+      def process(data, src)
         begin
-          event << JSON.parse(data)
+          event(JSON.parse(data))
           src.reply "sended\n\n"
         rescue => e
           src.reply "failed to send: #{data.inspect}\n"

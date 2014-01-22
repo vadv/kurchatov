@@ -5,14 +5,16 @@ class Mashie < Hash
     default ? super(default) : super(&blk)
   end
 
-  class << self; alias [] new; end
+  class << self;
+    alias [] new;
+  end
 
   def id #:nodoc:
-    self["id"]
+    self['id']
   end
 
   def type #:nodoc:
-    self["type"]
+    self['type']
   end
 
   alias_method :regular_reader, :[]
@@ -24,7 +26,7 @@ class Mashie < Hash
     value
   end
 
-  def custom_writer(key,value) #:nodoc:
+  def custom_writer(key, value) #:nodoc:
     regular_writer(convert_key(key), convert_value(value))
   end
 
@@ -63,6 +65,7 @@ class Mashie < Hash
   def key?(key)
     super(convert_key(key))
   end
+
   alias_method :has_key?, :key?
   alias_method :include?, :key?
   alias_method :member?, :key?
@@ -70,10 +73,11 @@ class Mashie < Hash
   def deep_merge(other_hash, &blk)
     dup.deep_update(other_hash, &blk)
   end
+
   alias_method :merge, :deep_merge
 
   def deep_update(other_hash, &blk)
-    other_hash.each_pair do |k,v|
+    other_hash.each_pair do |k, v|
       key = convert_key(k)
       if regular_reader(key).is_a?(Mash) and v.is_a?(::Hash)
         custom_reader(key).deep_update(v, &blk)
@@ -85,6 +89,7 @@ class Mashie < Hash
     end
     self
   end
+
   alias_method :deep_merge!, :deep_update
   alias_method :update, :deep_update
   alias_method :merge!, :update
@@ -94,7 +99,7 @@ class Mashie < Hash
   end
 
   def shallow_update(other_hash)
-    other_hash.each_pair do |k,v|
+    other_hash.each_pair do |k, v|
       regular_writer(convert_key(k), convert_value(v, true))
     end
     self
@@ -115,16 +120,16 @@ class Mashie < Hash
     return self.[](method_name, &blk) if key?(method_name)
     match = method_name.to_s.match(/(.*?)([?=!_]?)$/)
     case match[2]
-    when "="
-      self[match[1]] = args.first
-    when "?"
-      !!self[match[1]]
-    when "!"
-      initializing_reader(match[1])
-    when "_"
-      underbang_reader(match[1])
-    else
-      default(method_name, *args, &blk)
+      when '='
+        self[match[1]] = args.first
+      when '?'
+        !!self[match[1]]
+      when '!'
+        initializing_reader(match[1])
+      when '_'
+        underbang_reader(match[1])
+      else
+        default(method_name, *args, &blk)
     end
   end
 
@@ -136,17 +141,17 @@ class Mashie < Hash
 
   def convert_value(val, duping=false) #:nodoc:
     case val
-    when self.class
-      val.dup
-    when Hash
-      duping ? val.dup : val
-    when ::Hash
-      val = val.dup if duping
-      self.class.new(val)
-    when Array
-      val.collect{ |e| convert_value(e) }
-    else
-      val
+      when self.class
+        val.dup
+      when Hash
+        duping ? val.dup : val
+      when ::Hash
+        val = val.dup if duping
+        self.class.new(val)
+      when Array
+        val.collect { |e| convert_value(e) }
+      else
+        val
     end
   end
 end

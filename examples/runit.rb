@@ -27,7 +27,7 @@ collect do
   Dir.glob('/etc/service/*').each do |srv|
     srv_uptime = uptime(srv)
     srv_runned = runned?(srv)
-    srv_name   = human_srv(srv)
+    srv_name = human_srv(srv)
 
     # сервис запущен и работает дольше чем мы приходили к нему в прошлый раз
     if srv_runned && srv_uptime > interval

@@ -20,8 +20,8 @@ collect do
   end.compact.join("\n")
 
   event(
-    :service     => "iptables #{plugin.rule_file}",
-    :state       => current_rules == saved_rules,
-    :description => "iptables rules different between file: #{plugin.rule_file} and iptables-save"
+      :service => "iptables #{plugin.rule_file}",
+      :state => current_rules == saved_rules,
+      :description => "iptables rules different between file: #{plugin.rule_file} and iptables-save"
   )
 end

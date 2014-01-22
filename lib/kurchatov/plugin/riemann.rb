@@ -1,13 +1,12 @@
 # encoding: utf-8
 
-require "kurchatov/plugin"
-require "kurchatov/mashie"
+require 'kurchatov/plugin'
+require 'kurchatov/mashie'
 
 module Kurchatov
   module Plugins
     class Riemann < Kurchatov::Plugin
 
-      include Kurchatov::Mixin::Queue
       include Kurchatov::Mixin::Ohai
       include Kurchatov::Mixin::Event
       include Kurchatov::Mixin::Command
@@ -17,7 +16,7 @@ module Kurchatov
 
       def initialize(name = '')
         super(name)
-        @run_if = Proc.new {true}
+        @run_if = Proc.new { true }
         @plugin = Mashie.new
         @always_start = false
         @collect = nil
@@ -35,15 +34,15 @@ module Kurchatov
       end
 
       def respond_to_ohai?(opts = {})
-        opts.each { |k,v| return false unless ohai[k] == v }
+        opts.each { |k, v| return false unless ohai[k] == v }
         true
       end
 
       def runnable_by_config?
         Log.info("Plugin '#{self.name}' disabled by nil collect") and return if collect.nil?
-        Log.info("Plugin '#{self.name}' disabled in config") and return if plugin[:disable] == true
-        Log.info("Plugin '#{self.name}' not started by run_if condition ") and 
-          return if !self.instance_eval(&run_if)
+        Log.info("Plugin '#{self.name}' disabled in config") and return if (plugin[:disable] == true)
+        Log.info("Plugin '#{self.name}' not started by run_if condition ") and
+            return unless self.instance_eval(&run_if)
         @plugin[:service] = name if @plugin[:service].nil?
         true
       end

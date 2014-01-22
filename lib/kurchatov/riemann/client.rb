@@ -1,6 +1,6 @@
-require "timeout"
-require "socket"
-require "kurchatov/riemann/message"
+require 'timeout'
+require 'socket'
+require 'kurchatov/riemann/message'
 
 module Kurchatov
   module Riemann
@@ -19,15 +19,15 @@ module Kurchatov
       end
 
       def <<(events)
-       events = events.map {|e| Event.new(e) }
-       message = Message.new(:events => events)
-       with_connection do |socket|
-        x = message.encode_with_length
-        Timeout::timeout(SEND_TIMEOUT) {
-          socket.write(x)
-          socket.flush
-        }
-       end
+        events = events.map { |e| Event.new(e) }
+        message = Message.new(:events => events)
+        with_connection do |socket|
+          x = message.encode_with_length
+          Timeout::timeout(SEND_TIMEOUT) {
+            socket.write(x)
+            socket.flush
+          }
+        end
       end
 
       def with_connection

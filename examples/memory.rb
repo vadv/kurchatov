@@ -3,18 +3,18 @@ always_start true
 
 collect :os => 'linux' do
   m = File.read('/proc/meminfo').split(/\n/).inject({}) do |info, line|
-    x          = line.split(/:?\s+/)
+    x = line.split(/:?\s+/)
     info[x[0]] = x[1].to_i
     info
   end
 
-  free          = m['MemFree'].to_i * 1024
-  cached        = m['Cached'].to_i * 1024
-  buffers       = m['Buffers'].to_i * 1024
-  total         = m['MemTotal'].to_i * 1024
-  used          = total - free
-  free_bc       = free + buffers + cached
-  fraction      = 1 - (free_bc.to_f / total)
+  free = m['MemFree'].to_i * 1024
+  cached = m['Cached'].to_i * 1024
+  buffers = m['Buffers'].to_i * 1024
+  total = m['MemTotal'].to_i * 1024
+  used = total - free
+  free_bc = free + buffers + cached
+  fraction = 1 - (free_bc.to_f / total)
   swap_fraction = m['SwapTotal'] == 0 ? 0 : 1 - m['SwapFree'].to_f/m['SwapTotal']
 
   event(:service => 'memory % free', :desc => 'Memory usage, %', :metric => fraction.round(2) * 100, :critical => 85, :warning => 75)

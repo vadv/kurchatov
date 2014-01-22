@@ -15,9 +15,9 @@ module Kurchatov
           response = info
           client.gets
           headers = "HTTP/1.1 200 OK\r\n" +
-            "Server: Kurchatov Ruby\r\n" +
-            "Content-Length: #{response.bytesize}\r\n" +
-            "Content-Type: application/json\r\n\r\n"
+              "Server: Kurchatov Ruby\r\n" +
+              "Content-Length: #{response.bytesize}\r\n" +
+              "Content-Type: application/json\r\n\r\n"
           client.print headers
           client.print response
           client.close
@@ -26,9 +26,9 @@ module Kurchatov
 
       def info
         {
-          :version => Kurchatov::VERSION,
-          :uptime => (Time.now - @s_time).to_i,
-          :config => Kurchatov::Config.to_hash,
+            :version => Kurchatov::VERSION,
+            :uptime => (Time.now - @s_time).to_i,
+            :config => Kurchatov::Config.to_hash,
         }.to_json + "\n"
       end
 

@@ -27,14 +27,14 @@ collect do
   def run_master_sql
     run_sql("create database #{plugin.db4monit}") unless db4monit_exists?
     run_sql(
-      "drop table if exists timestamp; \
+        "drop table if exists timestamp; \
       create table timestamp ( id int primary key, value timestamp default now() ); \
       insert into timestamp (id) values (1); \
-          ", plugin.db4monit)
+        ", plugin.db4monit)
   end
 
   def repl_lag
-    unixnow - run_sql("select extract(epoch from value::timestamp) from timestamp where id = 1;", plugin.db4monit).to_i
+    unixnow - run_sql('select extract(epoch from value::timestamp) from timestamp where id = 1;', plugin.db4monit).to_i
   end
 
   def connections

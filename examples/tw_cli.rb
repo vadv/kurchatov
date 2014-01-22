@@ -9,9 +9,9 @@ end
 
 collect do
   event(
-    :service     => 'twcli',
-    :metric      => shell(plugin.cmd).to_i,
-    :description => 'Hardware raid tw_cli status',
-    :critical    => 1 
+      :service => 'twcli',
+      :metric => shell(plugin.cmd).to_i,
+      :description => 'Hardware raid tw_cli status',
+      :critical => 1
   )
 end

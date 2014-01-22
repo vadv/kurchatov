@@ -7,6 +7,6 @@ run_if do
 end
 
 collect do
-  event(:service     => 'exim', :metric => shell(plugin.exim, ' -bpc').to_i,
+  event(:service => 'exim', :metric => shell(plugin.exim, ' -bpc').to_i,
         :desc => 'Exim: count frozen mails', :warning => 5, :critical => 20)
 end

@@ -18,7 +18,7 @@
 
 require 'ruby-wmi'
 
-provides "cpu"
+provides 'cpu'
 
 cpuinfo = Mash.new
 cpu_number = 0
@@ -40,22 +40,22 @@ WMI::Win32_Processor.find(:all).each do |processor|
     number_of_cores = processor.numberofcores
     cpu_number += number_of_cores
   rescue NoMethodError => e
-    Ohai::Log.info("Can not find numberofcores property on Win32_Processor. Consider applying this patch: http://support.microsoft.com/kb/932370")
+    Ohai::Log.info('Can not find numberofcores property on Win32_Processor. Consider applying this patch: http://support.microsoft.com/kb/932370')
   end
 
   current_cpu = index.to_s
   index += 1
   cpuinfo[current_cpu] = Mash.new
-  cpuinfo[current_cpu]["vendor_id"] = processor.manufacturer
-  cpuinfo[current_cpu]["family"] = processor.family.to_s
-  cpuinfo[current_cpu]["model"] = processor.revision.to_s
-  cpuinfo[current_cpu]["stepping"] = processor.stepping
-  cpuinfo[current_cpu]["physical_id"] = processor.deviceid
+  cpuinfo[current_cpu]['vendor_id'] = processor.manufacturer
+  cpuinfo[current_cpu]['family'] = processor.family.to_s
+  cpuinfo[current_cpu]['model'] = processor.revision.to_s
+  cpuinfo[current_cpu]['stepping'] = processor.stepping
+  cpuinfo[current_cpu]['physical_id'] = processor.deviceid
   #cpuinfo[current_cpu]["core_id"] = XXX
-  cpuinfo[current_cpu]["cores"] = number_of_cores
-  cpuinfo[current_cpu]["model_name"] = processor.description
-  cpuinfo[current_cpu]["mhz"] = processor.maxclockspeed.to_s
-  cpuinfo[current_cpu]["cache_size"] = "#{processor.l2cachesize} KB"
+  cpuinfo[current_cpu]['cores'] = number_of_cores
+  cpuinfo[current_cpu]['model_name'] = processor.description
+  cpuinfo[current_cpu]['mhz'] = processor.maxclockspeed.to_s
+  cpuinfo[current_cpu]['cache_size'] = "#{processor.l2cachesize} KB"
   #cpuinfo[current_cpu]["flags"] = XXX
 end
 

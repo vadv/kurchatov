@@ -27,7 +27,7 @@ collect do
   file = File::Tail::Logfile.new(plugin.file)
   file.backward(plugin.check_last_lines)
   file.readlines.each do |line|
-    line.force_encoding("UTF-8")
+    line.force_encoding('UTF-8')
     next unless line.valid_encoding?
     time = get_unix_time_from_line(line)
     count_interval += 1 if time > (unixnow - plugin.interval)
@@ -35,14 +35,14 @@ collect do
   end
 
   event(
-    :service => "nginx log parse #{plugin.file} interval errors",
-    :metric => count_all,
-    :desc => "Count errors in file #{plugin.file}, last #{plugin.check_interval} sec"
+      :service => "nginx log parse #{plugin.file} interval errors",
+      :metric => count_all,
+      :desc => "Count errors in file #{plugin.file}, last #{plugin.check_interval} sec"
   )
   event(
-    :service => "nginx log parse #{plugin.file} realtime errors",
-    :metric => count_interval,
-    :state => 'ok',
-    :desc => "Count errors in file #{plugin.file}, last #{plugin.interval} sec"
+      :service => "nginx log parse #{plugin.file} realtime errors",
+      :metric => count_interval,
+      :state => 'ok',
+      :desc => "Count errors in file #{plugin.file}, last #{plugin.interval} sec"
   )
 end

@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
-provides "cpu"
+provides 'cpu'
 
 cpu Mash.new
-cpu[:real]  = from("sysctl -n hw.physicalcpu").to_i
-cpu[:total] = from("sysctl -n hw.logicalcpu").to_i
+cpu[:real] = from('sysctl -n hw.physicalcpu').to_i
+cpu[:total] = from('sysctl -n hw.logicalcpu').to_i
