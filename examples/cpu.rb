@@ -1,3 +1,4 @@
+name "cpu"
 always_start true
 interval 60
 
@@ -25,5 +26,25 @@ collect :os => 'linux' do
     else
       event(:service => service, :metric => fraction, :desc => description, :state => 'ok')
     end
+  end
+end
+
+collect :platform => 'windows' do
+  perfs = WMI::Win32_PerfFormattedData_Counters_ProcessorInformation.find(:all)
+  perfs.each do |perf|
+
+    perf_info = {}
+    perf.properties_.each do |p|
+      perf_info[p.name.wmi_underscore.to_sym] = perf.send(p.name)
+    end
+
+    human_name = perf_info[:name].gsub(",", ":").gsub("_","").gsub("Total","(общее)").downcase
+    event(
+      :service => "cpu usage #{perf_info[:name]}",
+      :metric => perf_info[:percent_processor_time].to_f,
+      :desc => "Использование процессора #{human_name}",
+      :warning => 75,
+      :critical => 80
+    )
   end
 end

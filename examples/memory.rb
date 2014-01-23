@@ -26,3 +26,20 @@ collect :os => 'linux' do
   event(:service => 'memory abs used', :desc => 'Memory usage, used (kB)', :metric => used, :state => 'ok')
   event(:service => 'memory abs free_bc', :desc => 'Memory usage with cache and buffers (kB)', :metric => free_bc, :state => 'ok')
 end
+
+collect :platform => 'windows' do
+  memories = WMI::Win32_OperatingSystem.find(:all)
+  memories.each do |memory|
+    mem_info = {}
+    memory.properties_.each do |p|
+      mem_info[p.name.wmi_underscore.to_sym] = memory.send(p.name)
+    end
+    event(
+      :service => "memory usage",
+      :metric => 100 * (1 - (mem_info[:free_physical_memory].to_f / mem_info[:total_visible_memory_size].to_f)),
+      :desc => "Использование памяти",
+      :warning => 75,
+      :critical => 80
+    )
+  end
+end
