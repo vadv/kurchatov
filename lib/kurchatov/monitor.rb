@@ -16,16 +16,13 @@ module Kurchatov
         begin
           @thread.join # call error
         rescue => e
-          desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n #{e.backtrace.join("\n")}"
+          desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
+            "Plugin: #{@plugin.inspect}. Trace:  #{e.backtrace.join("\n")}"
           Log.error(desc)
           event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
         end
         @thread = Thread.new { @plugin.run }
         true
-      end
-
-      def status
-        {@plugin.name => @thread.alive?}
       end
 
     end

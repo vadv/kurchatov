@@ -34,13 +34,13 @@ module Kurchatov
       end
 
       def set_event_state(hash = {})
-        return if hash[:state]
-        return if hash[:critical].nil? && hash[:warning].nil?
-        return if hash[:metric].nil?
         if hash[:state] == true || hash[:state] == false
           hash[:state] = hash[:state] ? 'ok' : 'critical'
           return
         end
+        return if hash[:state]
+        return if hash[:critical].nil? && hash[:warning].nil?
+        return if hash[:metric].nil?
         hash[:state] = 'ok'
         hash[:state] = 'warning' if hash[:warning] && hash[:metric] >= hash[:warning]
         hash[:state] = 'critical' if hash[:critical] && hash[:metric] >= hash[:critical]

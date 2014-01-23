@@ -51,9 +51,9 @@ bundle exec ./bin/kurchatov -d ./tmp/ -c ./tmp/config.yml --hosts 127.0.0.1 -l d
 echo "Stdout loader"
 cat ./tmp/loadplugins.log
 grep  'Start plugins' ./tmp/loadplugins.log | grep -q '@name="test_0"'
-grep  'Start plugins:' ./tmp/loadplugins.log | grep -q '@name="test_1"'
-grep  'Start plugins:' ./tmp/loadplugins.log | grep -q '@name="test2"'
-grep 'file command ls return: Gemfile' ./tmp/loadplugins.log
+grep  'Start plugins' ./tmp/loadplugins.log | grep -q '@name="test_1"'
+grep  'Start plugins' ./tmp/loadplugins.log | grep -q '@name="test2"'
+grep 'file command ls return: CHANGELOG' ./tmp/loadplugins.log
 grep 'get size from http://google.com:' ./tmp/loadplugins.log
 grep 'get size from https://www.kernel.org' ./tmp/loadplugins.log
 grep 'get size from ./tests/run.sh' ./tmp/loadplugins.log
