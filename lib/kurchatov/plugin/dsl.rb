@@ -58,7 +58,7 @@ module Kurchatov
         dsl = Kurchatov::Plugins::DSL.new
         paths.map do |path|
           Log.error("Directory #{path} not exists") and exit Kurchatov::Config[:ERROR_CONFIG] unless File.directory? path 
-          Dir["#{path}/*#{PLUGIN_EXT}"].sort
+          Dir[File.join(path, "*#{PLUGIN_EXT}")].sort
         end.flatten.each do |path|
           begin
             dsl.plugins << Kurchatov::Plugins::Riemann.new(File.basename(path, PLUGIN_EXT))
