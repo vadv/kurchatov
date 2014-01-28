@@ -12,13 +12,14 @@ module Kurchatov
       include Kurchatov::Mixin::Command
       include Kurchatov::Mixin::Http
 
-      attr_accessor :run_if, :collect, :always_start, :interval, :plugin
+      attr_accessor :run_if, :collect, :always_start, :ignore_errors, :interval, :plugin
 
       def initialize(name = '')
         super(name)
         @run_if = Proc.new { true }
         @plugin = Mashie.new
         @always_start = false
+        @ignore_errors = false
         @collect = nil
         @interval = 60.0
       end

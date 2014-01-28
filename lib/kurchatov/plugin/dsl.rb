@@ -20,6 +20,10 @@ module Kurchatov
         last.always_start = !!val
       end
 
+      def ignore_errors(val)
+        last.ignore_errors = !!val
+      end
+
       def interval(val)
         last.interval = val.to_f
       end

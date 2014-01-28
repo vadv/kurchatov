@@ -19,7 +19,9 @@ module Kurchatov
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
             "Plugin: #{@plugin.inspect}. Trace:  #{e.backtrace.join("\n")}"
           Log.error(desc)
-          event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
+          unless @plugin.ignore_errors 
+            event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
+          end
         end
         @thread = Thread.new { @plugin.run }
         true
