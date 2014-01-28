@@ -51,6 +51,8 @@ module Kurchatov
         return if hash[:diff].nil? && !hash[:diff]
         return if hash[:metric].nil?
         return if hash[:service].nil?
+        hash[:metric] = 0 if hash[:metric] == false
+        hash[:metric] = 1 if hash[:metric] == true
         @history ||= {}
         if @history[hash[:service]]
           old_metric = @history[hash[:service]]
