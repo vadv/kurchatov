@@ -14,6 +14,7 @@ collect :os => 'linux' do
 end
 
 collect :os => 'darwin' do
+  interval = 2
   event(
       :metric => shell('uptime | cut -d":" -f4- | sed s/,//g').to_f,
       :desc => 'LA averaged over 1 minute',

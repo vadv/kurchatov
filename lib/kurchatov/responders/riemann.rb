@@ -30,7 +30,7 @@ module Kurchatov
       end
 
       def flush
-        @events_to_send ||= events.all
+        @events_to_send ||= events.to_flush
         unless @events_to_send.empty?
           @riemanns.each { |riemann| riemann << @events_to_send }
           Log.debug("Sended events via #{@name.inspect}: #{@events_to_send}")

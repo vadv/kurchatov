@@ -10,8 +10,9 @@ module Kurchatov
       ]
 
       def event(hash = {})
+        @normilize = normalize_event(hash)
         Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
-        return unless normalize_event(hash)
+        return unless @normilize
         events << hash
       end
 

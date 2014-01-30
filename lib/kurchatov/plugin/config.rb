@@ -61,7 +61,7 @@ module Kurchatov
           end
           @plugins_to_run << p if p.runnable_by_config?
         end
-        Log.info("Start plugins: #{@plugins_to_run.inspect}")
+        Log.info("Start plugins: #{@plugins_to_run}")
         @plugins_to_run
       end
 

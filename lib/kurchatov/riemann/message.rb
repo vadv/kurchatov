@@ -1,6 +1,16 @@
 require 'beefcake'
 require 'kurchatov/riemann/event'
 
+# monkey patch
+module Beefcake::Message
+  def initialize(attrs={})
+    attrs ||= {}
+    fields.values.each do |fld|
+      self[fld.name] = attrs[fld.name]
+    end
+  end
+end
+
 module Kurchatov
   module Riemann
     class Message

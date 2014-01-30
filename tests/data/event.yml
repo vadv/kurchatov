@@ -1,0 +1,27 @@
+events:
+
+  - :metric: 3
+    :critical: 2
+    :warning: 1
+    :result: critical
+
+  - :metric: 2
+    :critical: 2
+    :warning: 1
+    :result: critical
+
+  - :metric: 1
+    :critical: 2
+    :warning: 1
+    :result: warning
+
+  - :metric: 0
+    :critical: 2
+    :warning: 1
+    :result: ok
+
+  - :state: true
+    :result: ok
+
+  - :state: false
+    :result: critical

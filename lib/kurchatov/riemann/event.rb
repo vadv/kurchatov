@@ -4,8 +4,8 @@ module Kurchatov
       include Beefcake::Message
       optional :time, :int64, 1
       optional :state, :string, 2
-      optional :service, :string, 3
-      optional :host, :string, 4
+      required :service, :string, 3
+      required :host, :string, 4
       optional :description, :string, 5
       repeated :tags, :string, 7
       optional :ttl, :float, 8
@@ -26,7 +26,7 @@ module Kurchatov
       def metric
         metric_d || metric_sint64 || metric_f
       end
-
+      
       def metric=(m)
         if Integer === m and (-(2**63)...2**63) === m
           self.metric_sint64 = m
