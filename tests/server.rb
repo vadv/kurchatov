@@ -5,28 +5,32 @@ require 'yaml'
 
 PORT = 5555
 HOST = '127.0.0.1'
+RECEIVE_INTERVAL = 20
+
 server = TCPServer.new(HOST, PORT)
 events = []
 puts "Run riemann server at #{HOST}:#{PORT}"
 
-client = server.accept
-loop do
-  line = client.read(4)
-  break if line.nil? || line.size != 4 
-  length = line.unpack('N').first
-  str = client.read(length)
-  message = Kurchatov::Riemann::Message.decode(str)
-  message.events.each do |event|
-    events << event
+Timeout::timeout(RECEIVE_INTERVAL) {
+  client = server.accept
+  loop do
+    line = client.read(4)
+    break if line.nil? || line.size != 4 
+    length = line.unpack('N').first
+    str = client.read(length)
+    message = Kurchatov::Riemann::Message.decode(str)
+    message.events.each do |event|
+      events << event
+    end
   end
-end
+}
 
 data = YAML.load_file('./tests/data/event.yml')
 events.each do |e|
   data["events"].each do |d|
     next unless d[:service] == e[:service]
     next if d[:result] == e[:state]
-    raise "Recieved state: #{e[:state]}, data state: #{d[:result]}"
+    raise "Recieved state: #{e[:state]}, data state: #{d[:result]}. \n Data: #{d.inspect} \n Event: #{e.inspect}"
   end
 end
 

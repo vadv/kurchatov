@@ -20,10 +20,13 @@ module Kurchatov
 
       def normalize_event(hash = {})
         hash[:description] = hash[:desc] if hash[:description].nil? && hash[:desc]
+
+        hash[:metric] = hash[:metric].to_f if hash[:metric].kind_of?(String)
         if hash[:metric].kind_of?(Float)
           hash[:metric] = 0.0 if hash[:metric].nan?
           hash[:metric] = hash[:metric].round(2)
         end
+
         set_diff_metric(hash)
         set_event_state(hash)
         return false if hash[:miss]

@@ -4,24 +4,40 @@ events:
     :critical: 2
     :warning: 1
     :result: critical
+    :service: metric > critical
 
   - :metric: 2
     :critical: 2
     :warning: 1
     :result: critical
+    :service: metric == critical
 
   - :metric: 1
     :critical: 2
     :warning: 1
     :result: warning
+    :service: metric == warning
 
   - :metric: 0
     :critical: 2
     :warning: 1
     :result: ok
+    :service: metric < warning
 
   - :state: true
     :result: ok
+    :service: state TrueClass
 
   - :state: false
     :result: critical
+    :service: state FalseClass
+
+  - :eval: 'shell("ls /| wc -l | wc -l")'
+    :warning: 0
+    :result: warning
+    :service: Shell test
+
+  - :eval: 'rest_get("http://ya.ru").size'
+    :critical: 10
+    :result: critical
+    :service: Http get test
