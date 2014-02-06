@@ -9,6 +9,9 @@ module Kurchatov
         @name = "udp responder #{@host}:#{@port}"
       end
 
+      def plugin_config
+        {:host => @host, :port => @port}
+      end
 
       def run
         super

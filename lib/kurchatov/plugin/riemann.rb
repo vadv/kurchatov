@@ -25,6 +25,10 @@ module Kurchatov
         @interval = 60.0
       end
 
+      def plugin_config
+        plugin
+      end
+
       def run
         super
         loop do

@@ -41,3 +41,8 @@ events:
     :critical: 10
     :result: critical
     :service: Http get test
+
+  - :eval: 'rest_get("http://127.0.0.1:55755").size'
+    :critical: 1
+    :result: critical
+    :service: Http responder

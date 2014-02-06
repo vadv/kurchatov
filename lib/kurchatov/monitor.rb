@@ -4,14 +4,14 @@ module Kurchatov
     class Task
       include Kurchatov::Mixin::Event
       attr_accessor :thread, :instance
+      attr_reader :count_errors, :last_error, :last_error_at
 
       def initialize(plugin)
         @plugin = plugin
         @thread = Thread.new { @plugin.run }
-      end
-
-      def status
-        !!@thread.alive?
+        @count_errors = 0
+        @last_error = nil
+        @last_error_at = nil
       end
 
       def name
@@ -22,8 +22,8 @@ module Kurchatov
         @plugin.class.to_s
       end
 
-      def uptime
-        @plugin.uptime
+      def config
+        @plugin.plugin_config
       end
 
       def died?
@@ -34,6 +34,9 @@ module Kurchatov
         rescue => e
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
             "Trace:  #{e.backtrace.join("\n")}"
+          @count_errors += 1
+          @last_error = desc
+          @last_error_at = Time.now
           Log.error(desc)
           unless @plugin.ignore_errors
             event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
@@ -67,7 +70,14 @@ module Kurchatov
     end
 
     def inspect
-      @tasks.map {|t| {name: t.name, alive: t.status, type: t.type, uptime: t.uptime}  }
+      @tasks.map do |t|
+        {
+          "name" => t.name,
+          "type" => t.type,
+          "config" => t.config,
+          "errors" => {"count" => t.count_errors, "last" => t.last_error, "time" => t.last_error_at}
+        }
+      end
     end
 
   end
