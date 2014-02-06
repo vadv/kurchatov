@@ -1,3 +1,4 @@
 * Version 0.0.5: Windows support
 * Version 0.0.6.pre.1: Add ignore errors
 * Version 0.0.6.pre.2: :metric => boolean return integer
+* Version 0.0.6.pre.4: Required block for plugin

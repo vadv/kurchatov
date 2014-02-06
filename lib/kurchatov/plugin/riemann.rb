@@ -12,11 +12,12 @@ module Kurchatov
       include Kurchatov::Mixin::Command
       include Kurchatov::Mixin::Http
 
-      attr_accessor :run_if, :collect, :always_start, :ignore_errors, :interval, :plugin
+      attr_accessor :run_if, :collect, :always_start, :required, :ignore_errors, :interval, :plugin
 
       def initialize(name = '')
         super(name)
         @run_if = Proc.new { true }
+        @required = Proc.new { true }
         @plugin = Mashie.new
         @always_start = false
         @ignore_errors = false
@@ -39,12 +40,22 @@ module Kurchatov
         true
       end
 
+      def runnable_by_required?
+        begin
+          self.instance_eval(&required)
+        rescue LoadError
+          return
+        end
+        true
+      end
+
       def runnable_by_config?
         Log.info("Plugin '#{self.name}' disabled by nil collect") and return if collect.nil?
         Log.info("Plugin '#{self.name}' disabled in config") and return if (plugin[:disable] == true)
         Log.info("Plugin '#{self.name}' not started by run_if condition ") and
             return unless self.instance_eval(&run_if)
-        @plugin[:service] = name if @plugin[:service].nil?
+        Log.error("Plugin '#{self.name}' not started by required block") and return unless runnable_by_required?
+        @plugin[:service] ||= name
         true
       end
 
