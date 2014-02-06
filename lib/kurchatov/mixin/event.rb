@@ -24,7 +24,7 @@ module Kurchatov
         hash[:metric] = hash[:metric].to_f if hash[:metric].kind_of?(String)
         if hash[:metric].kind_of?(Float)
           hash[:metric] = 0.0 if hash[:metric].nan?
-          hash[:metric] = ((hash[:metric] * 100).round/100.to_f)
+          hash[:metric] = ((hash[:metric] * 100).round/100.to_f) # 1.8.7 round
         end
 
         set_diff_metric(hash)
