@@ -11,6 +11,7 @@ module Kurchatov
 
 
       def run
+        super
         Socket.udp_server_loop(@host, @port) do |data, src|
           process(data, src)
         end

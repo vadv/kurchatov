@@ -14,6 +14,7 @@ module Kurchatov
       end
 
       def run
+        super
         make_clients
         loop { flush; sleep FLUSH_INTERVAL }
       end

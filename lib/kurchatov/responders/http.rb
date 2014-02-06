@@ -2,6 +2,8 @@ module Kurchatov
   module Responders
     class Http < Kurchatov::Plugin
 
+      include Kurchatov::Mixin::Monitor
+
       def initialize(conn)
         @host, @port = conn.split(':')
         @name = "http server #{@host}:#{@port}"
@@ -9,6 +11,7 @@ module Kurchatov
       end
 
       def run
+        super
         @server ||= TCPServer.new(@host, @port)
         loop do
           client = @server.accept
@@ -28,7 +31,7 @@ module Kurchatov
         {
             :version => Kurchatov::VERSION,
             :uptime => (Time.now - @s_time).to_i,
-            :config => Kurchatov::Config.to_hash,
+            :monitor => monitor.inspect,
         }.to_json + "\n"
       end
 

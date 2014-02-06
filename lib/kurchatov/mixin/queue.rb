@@ -4,7 +4,7 @@ module Kurchatov
   module Mixin
     module Queue
 
-      class << self;
+      class << self
         attr_accessor :instance_queue
       end
 

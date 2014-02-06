@@ -10,6 +10,22 @@ module Kurchatov
         @thread = Thread.new { @plugin.run }
       end
 
+      def status
+        !!@thread.alive?
+      end
+
+      def name
+        @plugin.name
+      end
+
+      def type
+        @plugin.class.to_s
+      end
+
+      def uptime
+        @plugin.uptime
+      end
+
       def died?
         return false if @thread.alive?
         # thread died, join and extract error
@@ -19,7 +35,7 @@ module Kurchatov
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
             "Trace:  #{e.backtrace.join("\n")}"
           Log.error(desc)
-          unless @plugin.ignore_errors 
+          unless @plugin.ignore_errors
             event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
           end
         end
@@ -50,8 +66,8 @@ module Kurchatov
       end
     end
 
-    def tasks_status
-      @tasks.map { |t| t.status }
+    def inspect
+      @tasks.map {|t| {name: t.name, alive: t.status, type: t.type, uptime: t.uptime}  }
     end
 
   end

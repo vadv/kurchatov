@@ -14,6 +14,7 @@ module Kurchatov
   class Application
     include Mixlib::CLI
     include Kurchatov::Mixin::Ohai
+    include Kurchatov::Mixin::Monitor
 
     option :help,
            :short => '-h',
@@ -119,24 +120,24 @@ module Kurchatov
       return if Config[:test_plugin]
       Log.error('Please set riemann host') and exit Config[:ERROR_CONFIG] unless Config[:riemann_responder]
       if Config[:udp_responder]
-        @monitor << Responders::Udp.new(Config[:udp_responder])
+        monitor << Responders::Udp.new(Config[:udp_responder])
       end
       if Config[:http_responder]
-        @monitor << Responders::Http.new(Config[:http_responder])
+        monitor << Responders::Http.new(Config[:http_responder])
       end
-      @monitor << Responders::Riemann.new(Config[:riemann_responder])
+      monitor << Responders::Riemann.new(Config[:riemann_responder])
     end
 
     def configure_plugins
       return if Config[:test_plugin]
       plugins = Kurchatov::Plugins::Config.load_plugins(Config[:plugin_paths],
                                                         Config[:config_file])
-      plugins.each { |p| @monitor << p }
+      plugins.each { |p| monitor << p }
     end
 
     def configure_test_plugin
       return unless Config[:test_plugin]
-      @monitor << Kurchatov::Plugins::DSL.load_riemann_plugin(Config[:test_plugin])
+      monitor << Kurchatov::Plugins::DSL.load_riemann_plugin(Config[:test_plugin])
     end
 
     def run
@@ -147,7 +148,7 @@ module Kurchatov
       configure_responders
       configure_plugins
       configure_test_plugin
-      @monitor.run
+      monitor.run
     end
 
   end

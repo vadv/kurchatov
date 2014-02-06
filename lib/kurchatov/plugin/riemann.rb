@@ -26,6 +26,7 @@ module Kurchatov
       end
 
       def run
+        super
         loop do
           t_start = Time.now
           Timeout::timeout(interval * 2.to_f/3) do
