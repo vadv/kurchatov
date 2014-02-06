@@ -46,3 +46,9 @@ events:
     :critical: 1
     :result: critical
     :service: Http responder
+
+  - :metric: 0.98
+    :critical: 2
+    :warning: 1
+    :result: ok
+    :service: round float
