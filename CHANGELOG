@@ -3,3 +3,4 @@
 * Version 0.0.6.pre.2: :metric => boolean return integer
 * Version 0.0.6.pre.4: Required block for plugin
 * Version 0.0.6.pre.5: Improve http responder, add monitor
+* Version 0.0.6: ruby 1.8.7 support

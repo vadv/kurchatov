@@ -5,7 +5,7 @@ require 'yaml'
 
 PORT = 5555
 HOST = '127.0.0.1'
-RECEIVE_INTERVAL = 20
+RECEIVE_INTERVAL = 60
 
 server = TCPServer.new(HOST, PORT)
 events = []
@@ -15,7 +15,7 @@ Timeout::timeout(RECEIVE_INTERVAL) {
   client = server.accept
   loop do
     line = client.read(4)
-    break if line.nil? || line.size != 4 
+    break if line.nil? || line.size != 4
     length = line.unpack('N').first
     str = client.read(length)
     message = Kurchatov::Riemann::Message.decode(str)

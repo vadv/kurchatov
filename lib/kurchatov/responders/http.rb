@@ -10,6 +10,10 @@ module Kurchatov
         @s_time = Time.now
       end
 
+      def plugin_config
+        {:host => @host, :port => @port}
+      end
+
       def run
         super
         @server ||= TCPServer.new(@host, @port)

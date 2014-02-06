@@ -9,8 +9,13 @@ module Kurchatov
       FLUSH_INTERVAL = 0.5
 
       def initialize(conn)
+        @ignore_errors = true
         @hosts = conn
         @riemanns = Array.new
+      end
+
+      def plugin_config
+        {:hosts => @hosts}
       end
 
       def run
