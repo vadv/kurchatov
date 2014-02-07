@@ -18,7 +18,7 @@ module Kurchatov
         {:hosts => @hosts}
       end
 
-      def run
+      def start
         super
         make_clients
         loop { flush; sleep FLUSH_INTERVAL }

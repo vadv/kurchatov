@@ -45,6 +45,11 @@ module Kurchatov
         last.collect = block
       end
 
+      def run(opts = {}, *args, &block)
+        return unless last.respond_to_ohai?(opts)
+        last.run = block
+      end
+
       def run_if(opts = {}, &block)
         return unless last.respond_to_ohai?(opts)
         last.run_if = block

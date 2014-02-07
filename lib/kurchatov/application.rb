@@ -7,7 +7,7 @@ require 'kurchatov/config'
 require 'kurchatov/log'
 require 'kurchatov/mixin/init'
 require 'kurchatov/plugin/config'
-require 'kurchatov/responders/init'
+require 'kurchatov/responders/riemann'
 require 'kurchatov/monitor'
 
 module Kurchatov
