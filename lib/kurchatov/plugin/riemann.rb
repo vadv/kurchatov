@@ -11,6 +11,8 @@ module Kurchatov
       include Kurchatov::Mixin::Event
       include Kurchatov::Mixin::Command
       include Kurchatov::Mixin::Http
+      include Kurchatov::Mixin::Queue
+      include Kurchatov::Mixin::Monitor
 
       attr_accessor :run_if, :collect, :run, :always_start, :required, :ignore_errors, :interval, :plugin
 
@@ -64,7 +66,7 @@ module Kurchatov
       end
 
       def runnable_by_config?
-        Log.info("Plugin '#{self.name}' disabled by run and collect nil") and return if collect.nil? || run.nil?
+        Log.info("Plugin '#{self.name}' disabled by run and collect nil") and return if (collect.nil? && run.nil?)
         Log.info("Plugin '#{self.name}' disabled in config") and return if (plugin[:disable] == true)
         Log.info("Plugin '#{self.name}' not started by run_if condition ") and
             return unless self.instance_eval(&run_if)
