@@ -131,8 +131,8 @@ module Kurchatov
       configure_opts
       configure_logging
       configure_defaults
-      load_plugins(Config[:plugin_paths])
       load_plugins(File.join(File.dirname(__FILE__),'responders'))
+      load_plugins(Config[:plugin_paths])
       configure_test_plugin
       monitor.start
     end
