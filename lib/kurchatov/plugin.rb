@@ -9,7 +9,7 @@ module Kurchatov
       @always_start = false
     end
 
-    def run
+    def start
       #
     end
 

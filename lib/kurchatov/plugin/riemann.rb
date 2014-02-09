@@ -11,13 +11,16 @@ module Kurchatov
       include Kurchatov::Mixin::Event
       include Kurchatov::Mixin::Command
       include Kurchatov::Mixin::Http
+      include Kurchatov::Mixin::Queue
+      include Kurchatov::Mixin::Monitor
 
-      attr_accessor :run_if, :collect, :always_start, :required, :ignore_errors, :interval, :plugin
+      attr_accessor :run_if, :collect, :run, :always_start, :required, :ignore_errors, :interval, :plugin
 
       def initialize(name = '')
         super(name)
         @run_if = Proc.new { true }
         @required = Proc.new { true }
+        @run = nil
         @plugin = Mashie.new
         @always_start = false
         @ignore_errors = false
@@ -29,8 +32,12 @@ module Kurchatov
         plugin
       end
 
-      def run
+      def start
         super
+        run.nil? ? start_collect : start_run
+      end
+
+      def start_collect
         loop do
           t_start = Time.now
           Timeout::timeout(interval * 2.to_f/3) do
@@ -38,6 +45,10 @@ module Kurchatov
           end
           sleep(interval - (Time.now - t_start).to_i)
         end
+      end
+
+      def start_run
+        self.instance_eval(&run)
       end
 
       def respond_to_ohai?(opts = {})
@@ -55,7 +66,7 @@ module Kurchatov
       end
 
       def runnable_by_config?
-        Log.info("Plugin '#{self.name}' disabled by nil collect") and return if collect.nil?
+        Log.info("Plugin '#{self.name}' disabled by run and collect nil") and return if (collect.nil? && run.nil?)
         Log.info("Plugin '#{self.name}' disabled in config") and return if (plugin[:disable] == true)
         Log.info("Plugin '#{self.name}' not started by run_if condition ") and
             return unless self.instance_eval(&run_if)

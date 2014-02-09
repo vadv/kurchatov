@@ -8,7 +8,7 @@ module Kurchatov
 
       def initialize(plugin)
         @plugin = plugin
-        @thread = Thread.new { @plugin.run }
+        @thread = Thread.new { @plugin.start }
         @count_errors = 0
         @last_error = nil
         @last_error_at = nil
@@ -42,7 +42,7 @@ module Kurchatov
             event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
           end
         end
-        @thread = Thread.new { @plugin.run }
+        @thread = Thread.new { @plugin.start }
         true
       end
 
@@ -61,7 +61,7 @@ module Kurchatov
       @tasks << Task.new(plugin)
     end
 
-    def run
+    def start
       loop do
         @tasks.each { |t| exit Config[:ERROR_PLUGIN_REQ] if t.died? && @stop_on_error }
         Log.debug("Check alive plugins [#{@tasks.count}]")

@@ -45,6 +45,11 @@ module Kurchatov
         last.collect = block
       end
 
+      def run(opts = {}, *args, &block)
+        return unless last.respond_to_ohai?(opts)
+        last.run = block
+      end
+
       def run_if(opts = {}, &block)
         return unless last.respond_to_ohai?(opts)
         last.run_if = block
@@ -54,6 +59,7 @@ module Kurchatov
         return unless last.respond_to_ohai?(opts)
         last.required = block
       end
+      alias :helpers :required
 
       def last_plugin
         last.plugin
@@ -66,6 +72,7 @@ module Kurchatov
 
       def self.load_riemann_plugins(paths)
         dsl = Kurchatov::Plugins::DSL.new
+        paths = [paths] unless paths.kind_of? Array
         paths.map do |path|
           Log.error("Directory #{path} not exists") and exit Kurchatov::Config[:ERROR_CONFIG] unless
             File.directory?(path)

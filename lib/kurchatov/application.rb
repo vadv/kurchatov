@@ -7,7 +7,6 @@ require 'kurchatov/config'
 require 'kurchatov/log'
 require 'kurchatov/mixin/init'
 require 'kurchatov/plugin/config'
-require 'kurchatov/responders/init'
 require 'kurchatov/monitor'
 
 module Kurchatov
@@ -116,23 +115,11 @@ module Kurchatov
       Config[:host] ||= ohai[:fqdn] || ohai[:hostname]
     end
 
-    def configure_responders
+    def load_plugins(path)
       return if Config[:test_plugin]
-      Log.error('Please set riemann host') and exit Config[:ERROR_CONFIG] unless Config[:riemann_responder]
-      if Config[:udp_responder]
-        monitor << Responders::Udp.new(Config[:udp_responder])
-      end
-      if Config[:http_responder]
-        monitor << Responders::Http.new(Config[:http_responder])
-      end
-      monitor << Responders::Riemann.new(Config[:riemann_responder])
-    end
-
-    def configure_plugins
-      return if Config[:test_plugin]
-      plugins = Kurchatov::Plugins::Config.load_plugins(Config[:plugin_paths],
+      plugins = Kurchatov::Plugins::Config.load_plugins(path,
                                                         Config[:config_file])
-      plugins.each { |p| monitor << p }
+      plugins.each {|p| monitor << p}
     end
 
     def configure_test_plugin
@@ -144,11 +131,10 @@ module Kurchatov
       configure_opts
       configure_logging
       configure_defaults
-      @monitor = Monitor.new(Config[:stop_on_error] || !!Config[:test_plugin])
-      configure_responders
-      configure_plugins
+      load_plugins(Config[:plugin_paths])
+      load_plugins(File.join(File.dirname(__FILE__),'responders'))
       configure_test_plugin
-      monitor.run
+      monitor.start
     end
 
   end
