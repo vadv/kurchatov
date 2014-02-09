@@ -1,7 +1,7 @@
 name 'http'
 always_start true
 
-default[:host], default[:port] = Kurchatov::Config[:http_responder].split(":")
+default[:host], default[:port] = Kurchatov::Config[:http_responder].to_s.split(":")
 
 run_if do
   !!Kurchatov::Config[:http_responder]
