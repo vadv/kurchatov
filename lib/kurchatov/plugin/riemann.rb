@@ -2,6 +2,7 @@
 
 require 'kurchatov/plugin'
 require 'kurchatov/mashie'
+require 'timeout'
 
 module Kurchatov
   module Plugins
