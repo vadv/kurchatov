@@ -18,10 +18,6 @@ module Kurchatov
         @plugin.name
       end
 
-      def type
-        @plugin.class.to_s
-      end
-
       def config
         @plugin.plugin_config
       end
@@ -73,7 +69,6 @@ module Kurchatov
       @tasks.map do |t|
         {
           "name" => t.name,
-          "type" => t.type,
           "config" => t.config,
           "errors" => {"count" => t.count_errors, "last" => t.last_error, "time" => t.last_error_at}
         }

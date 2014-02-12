@@ -11,8 +11,8 @@ module Kurchatov
 
       def event(hash = {})
         @normilize = normalize_event(hash)
-        Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
         return unless @normilize
+        Log.info("Mock message for test plugin: #{hash.inspect}") if Kurchatov::Config[:test_plugin]
         events << hash
       end
 
@@ -20,13 +20,11 @@ module Kurchatov
 
       def normalize_event(hash = {})
         hash[:description] = hash[:desc] if hash[:description].nil? && hash[:desc]
-
         hash[:metric] = hash[:metric].to_f if hash[:metric].kind_of?(String)
         if hash[:metric].kind_of?(Float)
           hash[:metric] = 0.0 if hash[:metric].nan?
           hash[:metric] = ((hash[:metric] * 100).round/100.to_f) # 1.8.7 round
         end
-
         set_diff_metric(hash)
         set_event_state(hash)
         return false if hash[:miss]
