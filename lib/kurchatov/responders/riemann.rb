@@ -2,6 +2,7 @@ require 'kurchatov/riemann/client'
 
 name 'riemann responder'
 always_start true
+ignore_errors true
 
 default[:hosts] = Kurchatov::Config[:riemann_responder]
 
