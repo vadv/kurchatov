@@ -1,4 +1,4 @@
-name 'http'
+name 'http responder'
 always_start true
 
 default[:host], default[:port] = Kurchatov::Config[:http_responder].to_s.split(":")

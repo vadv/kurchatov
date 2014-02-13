@@ -1,4 +1,4 @@
-name 'udp'
+name 'udp responder'
 always_start true
 
 default[:host], default[:port] = Kurchatov::Config[:udp_responder].to_s.split(":")

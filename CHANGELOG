@@ -4,4 +4,4 @@
 * Version 0.0.6.pre.4: Required block for plugin
 * Version 0.0.6.pre.5: Improve http responder, add monitor
 * Version 0.0.6: ruby 1.8.7 support
-* Version 0.0.7.pre.1: add FreeBSD support, responders as plugins
+* Version 0.0.7: add FreeBSD support, responders as plugins
