@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'beefcake', '>= 0.3.5'
-  spec.add_dependency 'ohai', '>= 6.20.0'
+  spec.add_dependency 'ohai', '~> 6.20.0'
 
   spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_development_dependency 'rake'
