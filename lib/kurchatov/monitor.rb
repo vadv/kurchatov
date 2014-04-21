@@ -43,7 +43,7 @@ module Kurchatov
           @last_error_at = Time.now
           Log.error(desc)
           unless @plugin.ignore_errors
-            event(:service => 'riemann client errors', :desc => desc, :state => 'critical')
+            event(:service => "plugin #{@plugin.name} errors", :desc => desc, :state => 'critical')
           end
         end
         @thread = Thread.new { @plugin.start }
