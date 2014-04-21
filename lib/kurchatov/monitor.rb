@@ -46,7 +46,7 @@ module Kurchatov
             event(:service => "plugin #{@plugin.name} errors", :desc => desc, :state => 'critical')
           end
         end
-        @thread = Thread.new { @plugin.start }
+        @thread = Thread.new { @plugin.start! }
         true
       end
 

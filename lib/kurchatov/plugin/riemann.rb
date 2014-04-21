@@ -12,6 +12,7 @@ module Kurchatov
       include Kurchatov::Mixin::Event
       include Kurchatov::Mixin::Command
       include Kurchatov::Mixin::Http
+      include Kurchatov::Mixin::RunitService
       include Kurchatov::Mixin::Queue
       include Kurchatov::Mixin::Monitor
 
