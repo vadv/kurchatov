@@ -7,7 +7,7 @@ module Kurchatov
   module Mixin
     module Http
 
-      USER_AGENT = "Kurchatov (Riemann client v#{Kurchatov::Version})".freeze
+      USER_AGENT = "Kurchatov (Riemann client)".freeze
 
       # /path/to/file, https://ya.ru, http://a:a@yandex.ru
       def rest_get(url)
