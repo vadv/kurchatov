@@ -8,7 +8,7 @@ module Kurchatov
 
       def initialize(plugin)
         @plugin = plugin
-        @thread = Thread.new { @plugin.start }
+        @thread = Thread.new { @plugin.start! }
         @count_errors = 0
         @last_error = nil
         @last_error_at = nil
@@ -20,6 +20,14 @@ module Kurchatov
 
       def config
         @plugin.plugin_config
+      end
+
+      def stop!
+        Thread.kill(@thread)
+      end
+
+      def stopped?
+        @plugin.stopped?
       end
 
       def died?
@@ -57,9 +65,17 @@ module Kurchatov
       @tasks << Task.new(plugin)
     end
 
-    def start
+    def start!
       loop do
-        @tasks.each { |t| exit Config[:ERROR_PLUGIN_REQ] if t.died? && @stop_on_error }
+        @tasks.each do |task|
+          if task.died? && @stop_on_error
+            exit(Config[:ERROR_PLUGIN_REQ])
+          end
+          if task.stopped?
+            task.stop!
+            @tasks.delete(task)
+          end
+        end
         Log.debug("Check alive plugins [#{@tasks.count}]")
         sleep CHECK_ALIVE_TIMEOUT
       end

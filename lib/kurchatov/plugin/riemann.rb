@@ -33,7 +33,7 @@ module Kurchatov
         plugin
       end
 
-      def start
+      def start!
         super
         run.nil? ? start_collect : start_run
       end

@@ -124,7 +124,9 @@ module Kurchatov
 
     def configure_test_plugin
       return unless Config[:test_plugin]
-      monitor << Kurchatov::Plugins::DSL.load_riemann_plugin(Config[:test_plugin])
+      plugins = Kurchatov::Plugins::Config.load_test_plugin(Config[:test_plugin],
+                                                        Config[:config_file])
+      plugins.each {|p| monitor << p}
     end
 
     def run
@@ -134,7 +136,7 @@ module Kurchatov
       load_plugins(File.join(File.dirname(__FILE__),'responders'))
       load_plugins(Config[:plugin_paths])
       configure_test_plugin
-      monitor.start
+      monitor.start!
     end
 
   end

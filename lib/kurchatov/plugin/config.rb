@@ -6,6 +6,13 @@ module Kurchatov
   module Plugins
     module Config
 
+      def self.load_test_plugin(plugin_path, config_file)
+        config = File.exists?(config_file) ? YAML.load_file(config_file) : {}
+        plugin = Kurchatov::Plugins::DSL.load_riemann_plugin(plugin_path)
+        plugin.plugin.merge!(config[plugin.name]) unless config.empty?
+        [plugin]
+      end
+
       def self.find_plugin(name, array)
         array.find { |p| p.name == name }
       end

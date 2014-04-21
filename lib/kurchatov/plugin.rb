@@ -7,12 +7,20 @@ module Kurchatov
       @name = name
       @ignore_errors = false
       @always_start = false
+      @stopped = false
     end
 
-    def start
-      #
+    def start!
+      return if @stopped
     end
 
+    def stop!
+      @stopped = true
+    end
+
+    def stopped?
+      @stopped
+    end
 
   end
 end
