@@ -64,6 +64,15 @@ end
 * Эвенты группируются и отсылаются асинхронно пачками (все что накопилось за `Kurchatov::Responders::Riemann::FLUSH_INTERVAL` по дефолту 0.5 секунд)
 * При отсутвии метрики второй и последующий раз `:state == "ok"` не будет отсылаться
 
+### Helpers
+* stop! - останавливает запущенный плагин
+* rest_get("http://user:password@host/uri") - body
+* rest_get("/tmp/file") - body
+* http_get("http://ya.ru") - body и http_code. если http_code == 0 - возвращает на SocketError
+* runit_service_stat("service_name") - service status. unknown если неизвестный сервис
+* runit_service_running?("service_name") - true если сервис запущен
+* runit_service_uptime("service_name") - аптайм сервиса, -1 в случае ошибки
+
 Больше примеров вы найдете [тут](https://github.com/vadv/kurchatov/tree/master/examples).
 
 ## Ohai

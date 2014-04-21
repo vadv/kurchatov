@@ -1,6 +1,7 @@
 require 'net/http'
 require 'open-uri'
 require 'yajl/json_gem'
+require 'kurchatov/version'
 
 module Kurchatov
   module Mixin
