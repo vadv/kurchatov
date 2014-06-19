@@ -14,7 +14,8 @@ helpers do
       :version => Kurchatov::VERSION,
       :uptime => (Time.now - @s_time).to_i,
       :monitor => monitor.inspect,
-      :fqdn => Kurchatov::Config[:host]
+      :fqdn => Kurchatov::Config[:host],
+      :app_name => 'kurchatov'
     }.to_json + "\n"
   end
 end
