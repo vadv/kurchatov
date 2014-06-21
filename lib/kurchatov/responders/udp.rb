@@ -10,8 +10,11 @@ end
 helpers do
   def process(data, src)
     begin
-      event(JSON.parse(data))
+      hash = JSON.parse(data)
+      hash = hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      event(hash)
       src.reply "sended\n\n"
+      Log.debug("Send event from udp responder: #{hash.inspect}")
     rescue => e
       src.reply "failed to send: #{data.inspect}\n"
       Log.error("Failed parse #{data.inspect}, #{e.class}: #{e}\n #{e.backtrace.join("\n")}")
