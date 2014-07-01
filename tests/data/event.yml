@@ -32,17 +32,17 @@ events:
     :result: critical
     :service: state FalseClass
 
-  - :eval: 'shell("ls /| wc -l | wc -l")'
+  - :eval_metric: 'shell("ls /| wc -l | wc -l")'
     :warning: 0
     :result: warning
     :service: Shell test
 
-  - :eval: 'rest_get("http://ya.ru").size'
+  - :eval_metric: 'rest_get("http://ya.ru").size'
     :critical: 10
     :result: critical
     :service: Http get test
 
-  - :eval: 'rest_get("http://127.0.0.1:55755").size'
+  - :eval_metric: 'rest_get("http://127.0.0.1:55755").size'
     :critical: 1
     :result: critical
     :service: Http responder
@@ -52,3 +52,54 @@ events:
     :warning: 1
     :result: ok
     :service: round float
+
+  - :metric: 1.5
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :service: avg
+    :time: 1
+    :miss_count: true # only for tests
+
+  - :metric: 0.6
+    :result: warning # avg == 2, (1.5 + 0.6)/2 >= 1
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :service: avg
+    :time: 2
+
+  - :metric: 10
+    :result: critical # avg == 2, (10 + 0.6)/2 >= critical
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :service: avg
+    :time: 3
+
+  - :metric: 10
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :diff: true
+    :service: avg with diff
+    :time: 4
+    :miss_count: true
+
+  - :metric: 12
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :diff: true
+    :service: avg with diff
+    :time: 5
+    :miss_count: true
+
+  - :metric: 14.5
+    :critical: 2
+    :warning: 1
+    :avg: 2
+    :diff: true
+    :service: avg with diff
+    :result: critical
+    :time: 6

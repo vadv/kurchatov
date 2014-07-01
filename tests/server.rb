@@ -2,6 +2,7 @@ require 'socket'
 require 'timeout'
 require 'kurchatov/riemann/client'
 require 'yaml'
+require_relative 'testreceived'
 
 PORT = 5555
 HOST = '127.0.0.1'
@@ -25,14 +26,5 @@ Timeout::timeout(RECEIVE_INTERVAL) {
   end
 }
 
-data = YAML.load_file('./tests/data/event.yml')
-events.each do |e|
-  data["events"].each do |d|
-    next unless d[:service] == e[:service]
-    next if d[:result] == e[:state]
-    raise "Recieved state: #{e[:state]}, data state: #{d[:result]}. \n Data: #{d.inspect} \n Event: #{e.inspect}"
-  end
-end
-
-raise "Not all events recieved" unless 3 * data["events"].count == events.count
-puts "All done!"
+t = TestReceived.new(events, './tests/data/event.yml')
+t.compare!
