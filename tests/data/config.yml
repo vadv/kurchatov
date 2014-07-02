@@ -1,16 +1,10 @@
 not_exists:
   - not error please
 
-# create sample_plugin from sample
-sample_plugin:
-  cmd: 'ls'
-  url: 'http://example.com'
-  parent: sample
-  sleep: 2
+new_multi_start:
+  parent: multi_start
 
-# cteate sample_0 and sample_1
-sample:
-  - url: 'http://google.com'
-    cmd: 'test -f ./tests/run.sh'
-  - url: 'https://www.kernel.org'
-    cmd: 'ps'
+multi_start:
+  - event_sended: false
+  - event_sended: false
+  - event_sended: true

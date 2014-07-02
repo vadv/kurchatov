@@ -40,7 +40,7 @@ module Kurchatov
         begin
           @thread.join # call error
         rescue => e
-          desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
+          desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}.\n" +
             "Trace:  #{e.backtrace.join("\n")}"
           @count_errors += 1
           @last_error_count += 1
@@ -51,7 +51,6 @@ module Kurchatov
             event(:service => "plugin #{@plugin.name} errors", :desc => desc, :state => 'critical')
           end
         end
-        start! #FIXME
         true
       end
 
@@ -64,8 +63,7 @@ module Kurchatov
     attr_accessor :tasks
     CHECK_ALIVE_TIMEOUT = 5
 
-    def initialize(stop = false)
-      @stop_on_error = stop
+    def initialize
       @tasks = Array.new
     end
 
@@ -77,9 +75,7 @@ module Kurchatov
     def start!
       loop do
         @tasks.each do |task|
-          if task.died? && @stop_on_error
-            exit(Config[:ERROR_PLUGIN_REQ])
-          end
+          task.start! if task.died?
           if task.stopped?
             task.stop!
             @tasks.delete(task)

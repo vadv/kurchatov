@@ -10,7 +10,7 @@ module Kurchatov
 
       def monitor
         @instance_monitor ||= Kurchatov::Mixin::Monitor.instance_monitor ||=
-          Kurchatov::Monitor.new(Kurchatov::Config[:stop_on_error] || !!Kurchatov::Config[:test_plugin])
+          Kurchatov::Monitor.new
       end
 
     end

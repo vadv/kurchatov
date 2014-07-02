@@ -1,5 +1,21 @@
 events:
 
+  - :service: new_multi_start
+    :result: ok
+    :miss_send_from_plugin_data: true
+
+  - :service: multi_start_0
+    :result: ok
+    :miss_send_from_plugin_data: true
+
+  - :service: multi_start_1
+    :result: ok
+    :miss_send_from_plugin_data: true
+
+  - :service: plugin not ignore errors errors
+    :result: critical
+    :miss_send_from_plugin_data: true
+
   - :metric: 3
     :critical: 2
     :warning: 1
@@ -36,11 +52,6 @@ events:
     :warning: 0
     :result: warning
     :service: Shell test
-
-  - :eval_metric: 'rest_get("http://ya.ru").size'
-    :critical: 10
-    :result: critical
-    :service: Http get test
 
   - :eval_metric: 'rest_get("http://127.0.0.1:55755").size'
     :critical: 1

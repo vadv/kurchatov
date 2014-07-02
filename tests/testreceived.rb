@@ -23,7 +23,7 @@ class TestReceived
     from_data = data["events"].select {|x| x[:miss_count] != true }.count
     from_events = @events.count
 
-    raise "Not all events recieved: from data: #{from_data} and from server: #{from_events}" unless 3 * from_data == from_events # see config.yml (3 copy of sample plugin run)
+    raise "Not all events recieved: from data: #{from_data} and from server: #{from_events}" unless from_data == from_events
 
     puts "Recieved events:"
     puts "#{@events.inspect}"

@@ -7,6 +7,5 @@ module Kurchatov
     default :config_file, '/etc/kurchatov/config.yml'
     # errors
     default :ERROR_CONFIG, 2
-    default :ERROR_PLUGIN_REQ, 3
   end
 end

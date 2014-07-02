@@ -90,12 +90,6 @@ module Kurchatov
            :long => '--udp 0.0.0.0:55955',
            :description => 'Set udp responder for information'
 
-    option :stop_on_error,
-           :long => '--stop-on-error',
-           :description => 'Stop on plugin or connection problem',
-           :boolean => true,
-           :proc => lambda { |l| !!l }
-
     def configure_opts
       @attributes = parse_options
       @attributes = nil if @attributes.empty?
