@@ -4,9 +4,6 @@ always_start true
 ignore_errors false
 
 collect do
-  @first_start ||= true
-  if @first_start
-    raise "error"
-  end
+  raise "error" if (@first_start ||= true)
   @first_start = false
 end
