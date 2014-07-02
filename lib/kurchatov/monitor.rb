@@ -32,10 +32,12 @@ module Kurchatov
       end
 
       def died?
-        return false if @thread.alive?
+        if @thread.alive?
+          @last_error_count = 0
+          return false 
+        end
         # thread died, join and extract error
         begin
-          @last_error_count = 0
           @thread.join # call error
         rescue => e
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
@@ -49,8 +51,12 @@ module Kurchatov
             event(:service => "plugin #{@plugin.name} errors", :desc => desc, :state => 'critical')
           end
         end
-        @thread = Thread.new { @plugin.start! }
+        start! #FIXME
         true
+      end
+
+      def start!
+        @thread = Thread.new { @plugin.start! }
       end
 
     end
