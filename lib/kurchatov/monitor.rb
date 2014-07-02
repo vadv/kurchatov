@@ -12,6 +12,7 @@ module Kurchatov
         @count_errors = 0
         @last_error = nil
         @last_error_at = nil
+        @last_error_count = 0
       end
 
       def name
@@ -34,15 +35,17 @@ module Kurchatov
         return false if @thread.alive?
         # thread died, join and extract error
         begin
+          @last_error_count = 0
           @thread.join # call error
         rescue => e
           desc = "Plugin '#{@plugin.name}' died. #{e.class}: #{e}\n." +
             "Trace:  #{e.backtrace.join("\n")}"
           @count_errors += 1
+          @last_error_count += 1
           @last_error = desc
           @last_error_at = Time.now
           Log.error(desc)
-          unless @plugin.ignore_errors
+          if @plugin.ignore_errors == false || (@plugin.ignore_errors.class == 'Fixnum' && @plugin.ignore_errors > @plugin.last_error_count)
             event(:service => "plugin #{@plugin.name} errors", :desc => desc, :state => 'critical')
           end
         end
