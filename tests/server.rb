@@ -2,7 +2,7 @@ require 'socket'
 require 'timeout'
 require 'kurchatov/riemann/client'
 require 'yaml'
-require_relative 'testreceived'
+require File.expand_path('../testreceived', __FILE__)
 
 PORT = 5555
 HOST = '127.0.0.1'
