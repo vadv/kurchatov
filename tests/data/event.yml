@@ -12,10 +12,6 @@ events:
     :result: ok
     :miss_send_from_plugin_data: true
 
-  - :service: plugin not ignore errors errors
-    :result: critical
-    :miss_send_from_plugin_data: true
-
   - :metric: 3
     :critical: 2
     :warning: 1

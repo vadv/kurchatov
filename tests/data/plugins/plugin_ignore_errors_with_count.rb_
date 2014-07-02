@@ -1,0 +1,14 @@
+name "ignore errors with count"
+
+# CHECK_ALIVE_TIMEOUT = 5 second
+# sleep_plugin 20
+# raise errors 
+
+always_start true
+ignore_errors 3
+
+collect do
+  @errors ||= 1
+  raise "error" if @errors < 3
+  @error += 1
+end

@@ -69,25 +69,25 @@ module Kurchatov
 
     def <<(plugin)
       Log.debug("Add new plugin: #{plugin.inspect}")
-      @tasks << Task.new(plugin)
+      tasks << Task.new(plugin)
     end
 
     def start!
       loop do
-        @tasks.each do |task|
+        tasks.each do |task|
           task.start! if task.died?
           if task.stopped?
             task.stop!
-            @tasks.delete(task)
+            tasks.delete(task)
           end
         end
-        Log.debug("Check alive plugins [#{@tasks.count}]")
+        Log.debug("Check alive plugins [#{tasks.count}]")
         sleep CHECK_ALIVE_TIMEOUT
       end
     end
 
     def inspect
-      @tasks.map do |t|
+      tasks.map do |t|
         {
           "name" => t.name,
           "config" => t.config,
