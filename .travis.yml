@@ -2,7 +2,7 @@ language: ruby
 
 os:
   - linux
-  - osx
+#  - osx
   - windows
 
 before_install:
