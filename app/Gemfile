@@ -1,0 +1,9 @@
+source "https://rubygems.org"
+
+gem "kurchatov", "= 0.2.5"
+gem "sys-filesystem"
+gem "sys-proctable"
+gem "net-ping"
+gem "net-ntp"
+gem "file-tail"
+gem "ffi-rzmq", :require => false

@@ -1,0 +1,11 @@
+Source: riemann-client
+Section: admin
+Maintainer: Undev DevOps Team <devops@undev.ru>
+Uploaders: Undev DevOps Team <devops@undev.ru>
+Build-Depends: cdbs, ruby-undev-1.9.3-p327, undev-cdbs-ruby, locales [amd64 i386], lzma [amd64 i386], language-pack-en-base [armel]
+Standards-Version: 3.8.0
+
+Package: riemann-client
+Architecture: amd64 armel
+Depends: ${misc:Depends},  ${shlibs:Depends}
+Description: Riemann client monitoring tools
