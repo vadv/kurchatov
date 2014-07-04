@@ -2,7 +2,7 @@ language: ruby
 
 os:
   - linux
-  - osx
+#  - osx
   - windows
 
 before_install:
@@ -10,11 +10,10 @@ before_install:
  - uname -a
  - env | sort
 
-rvm: 
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
+rvm:
   - 1.8.7
+  - 1.9.3
+  - 2.1.2 
 
 script: "./tests/run.sh"
 
