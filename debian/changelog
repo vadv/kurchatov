@@ -2,10 +2,10 @@ riemann-client (1:0.2.5) stable; urgency=low
 
   * Add epoch, move to common
 
- -- Undev DevOps Team <devops@undev.ru> Fri, 04 Jul 2014 11:26:28 +0400
+ -- Undev DevOps Team <devops@undev.ru>  Fri, 04 Jul 2014 11:26:28 +0400
 
 riemann-client (0.2.5) stable; urgency=low
 
   * Init
 
- -- Undev DevOps Team <devops@undev.ru> Fri, 04 Jul 2014 05:01:28 +0000
+ -- Undev DevOps Team <devops@undev.ru>  Fri, 04 Jul 2014 05:01:28 +0000
