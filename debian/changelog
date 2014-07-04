@@ -1,5 +1,5 @@
-riemann-client (0.0.1) stable; urgency=low
+riemann-client (0.2.5) stable; urgency=low
 
   * Init . 
 
- -- Undev DevOps Team <devops@undev.ru> Tue, 21 Jan 2014 05:01:28 +0000
+ -- Undev DevOps Team <devops@undev.ru> Fri, 4 Jul 2014 05:01:28 +0000
