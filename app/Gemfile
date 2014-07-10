@@ -7,3 +7,4 @@ gem "net-ping"
 gem "net-ntp"
 gem "file-tail"
 gem "ffi-rzmq", :require => false
+gem "addressable", :require => false
