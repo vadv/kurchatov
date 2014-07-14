@@ -41,11 +41,10 @@ module Kurchatov
 
       def start_collect
         loop do
-          t_start = Time.now
-          Timeout::timeout(interval * 2.to_f/3) do
-            self.instance_eval(&collect)
-          end
-          sleep(interval - (Time.now - t_start).to_i)
+          tick = Time.now
+          Timeout::timeout(interval) { self.instance_eval(&collect) }
+          tick = interval - (Time.now - tick).to_f
+          tick > 0.0 ? sleep(tick) : raise(Timeout::Error, "Execution timeout. Exec time: #{tick}, interval: #{interval}")
         end
       end
 
