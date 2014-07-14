@@ -29,6 +29,7 @@ GEM
       mixlib-shellout
       systemu (~> 2.5.2)
       yajl-ruby
+    parallel (1.0.0)
     sys-filesystem (1.1.1)
       ffi
     sys-proctable (0.9.3)
@@ -46,5 +47,6 @@ DEPENDENCIES
   kurchatov (= 0.2.5)
   net-ntp
   net-ping
+  parallel
   sys-filesystem
   sys-proctable

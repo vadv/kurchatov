@@ -1,3 +1,9 @@
+riemann-client (1:0.2.5.2) stable; urgency=low
+
+  * Add parallel gem
+
+ -- Undev DevOps Team <devops@undev.ru>  Fri, 14 Jul 2014 11:26:28 +0400
+
 riemann-client (1:0.2.5.1) stable; urgency=low
 
   * Add addresable gem
